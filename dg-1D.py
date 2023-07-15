@@ -16,7 +16,7 @@ from scipy.special import jacobi
 # xdot function
 def f(xv):
     #x = xv[0]
-    print(str(xv))
+    #print(str(xv))
     # f = 1, xv*0 + 1
     # f = t, np.array([t0,tf])
     xdot = np.sin(xv)
@@ -138,6 +138,7 @@ if __name__ == "__main__":
     tq = np.zeros((1)) # time points that correspond to quad points
     #xh[0] = 2*np.arctan(1) + 2*np.pi
     x0 = 2*np.arctan(1) + 2*np.pi
+    #x0 = 1
     xh[0] = x0
     xhq = xh[0]
     x_exact = lambda t: 2*np.arctan(np.exp(t)) + 2*np.pi
@@ -158,18 +159,18 @@ if __name__ == "__main__":
         t0 = t[j-1]
         tf = t[j]
         c = scipy.optimize.root(resid, cguess, args=(xh0,)).x # solve residual function above
-        xhq = np.append(xhq,phi @ c)
-        tq = np.append(tq,dt*xi/2 + (t0+tf)/2)
+        #xhq = np.append(xhq,phi @ c)
+        #tq = np.append(tq,dt*xi/2 + (t0+tf)/2)
         xh = np.append(xh,phi_right @ c) # xi = +1
         cguess = c
         xh0 = xh[-1]
     
 
     plt.figure()
-    plt.plot(t,x_exact(t),'k--',label=r'$x_{exact} = 2 \tan^{-1} (e^t) + 2 \pi$')
-    plt.title(r"$\dot{x} = f = \sin(x), x(0) = 2 \tan^{-1}(t) + 2 \pi, p = 3, \Delta t = \frac{1}{2}$")
-    plt.scatter(tq,xhq)
-    plt.scatter(t,xh)
+    plt.plot(t,x_exact(t),'k--',label=r'$x_{exact} = 2 \tan^{-1}(e^t) + 2\pi$')
+    plt.title(r"$\dot{x} = f = \sin(x), x(0) = 2 \tan^{-1}(t) + 2\pi, p = 3, \Delta t = \frac{1}{2}$")
+    #plt.scatter(tq,xhq)
+    plt.scatter(t,xh,zorder=2)
     plt.xlabel("t")
     plt.ylabel("x")
     plt.grid("on")
